@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0">
@@ -79,6 +79,7 @@
   <script type="text/javascript">
     let totaalAantal = 190;
     let diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2);
+    let intervalID = null;
 
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -93,6 +94,10 @@
       document.getElementById('welcome').style.display = 'none';
       document.getElementById('container').style.display = 'block';
       document.documentElement.requestFullscreen();
+      // toon eerst Dia1.png
+      const pic = document.getElementById('pic');
+      pic.src = 'Dia1.png';
+      pic.style.display = 'block';
     }
 
     function nieuwMens() {
@@ -103,25 +108,28 @@
       let volgende = diaVolgorde.shift();
       const pic = document.getElementById('pic');
       pic.src = 'Dia' + volgende + '.png';
-      pic.style.display = 'block';
     }
 
     function startCount(seconds) {
+      if (intervalID !== null) return; // voorkom dubbele countdowns
+
       let counter = seconds;
       const span = document.getElementById("count");
       span.innerHTML = counter;
       const pic = document.getElementById("pic");
       pic.style.opacity = 0.5;
 
-      const interval = setInterval(() => {
+      intervalID = setInterval(() => {
         counter--;
         if (counter > 0) {
           span.innerHTML = counter;
         } else {
-          clearInterval(interval);
+          clearInterval(intervalID);
+          intervalID = null;
           nieuwMens();
           span.innerHTML = '';
           pic.style.opacity = 1;
+          pic.style.display = 'block';
         }
       }, 1000);
     }
