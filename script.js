@@ -1,13 +1,17 @@
 const dia = document.getElementById('dia');
 const countdown = document.getElementById('countdown');
 
-// Genereer automatisch dia-bestanden zoals Dia1.PNG t/m Dia250.PNG
-const diaList = [];
-const totalDiaCount = 250; // ← Pas dit aan aan het werkelijke aantal
-
-for (let i = 1; i <= totalDiaCount; i++) {
-    diaList.push(`img/Dia${i}.PNG`);
-}
+// Voeg hier je dia-bestanden toe (behalve de welkomst-dia)
+const diaList = [
+    "img/dia1.png",
+    "img/dia2.png",
+    "img/dia3.png",
+    "img/dia4.png",
+    "img/dia5.png",
+    "img/dia6.png",
+    "img/dia7.png",
+    "img/dia8.png"
+];
 
 let isCountdownRunning = false;
 
