@@ -61,22 +61,15 @@
       }
     }
 
-    function startApp() {
-      // Het welkomsscherm is nu verwijderd, omdat er geen startknop meer nodig is.
-      document.documentElement.requestFullscreen();
-
-      document.body.onclick = () => {
-        if (eersteKeer) {
-          eersteKeer = false;
-          startCount(3); // Start de countdown pas bij de eerste klik
-        } else {
-          nieuwMens(); // Toon de volgende dia na de klik
-        }
-      };
-    }
-
     // Start de applicatie zodra de pagina geladen is
-    startApp();
+    document.body.onclick = () => {
+      if (eersteKeer) {
+        eersteKeer = false;
+        startCount(3); // Start de countdown pas bij de eerste klik
+      } else {
+        nieuwMens(); // Toon de volgende dia na de klik
+      }
+    };
 
     function nieuwMens() {
       if (diaVolgorde.length === 0) {
