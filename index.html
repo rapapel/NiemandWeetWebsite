@@ -79,8 +79,10 @@
   </div>
 
   <script type="text/javascript">
-    const totaalAantal = 8;
-    let diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2); // Dia2 t/m Dia8
+    const diaBestanden = [
+      "Dia2.png", "Dia3.png", "Dia4.png", "Dia5.png", "Dia6.png", "Dia7.png", "Dia8.png"
+    ]; // Handmatig de beschikbare dia's
+    let diaVolgorde = [...diaBestanden]; // Kopie van de array om te randomizen
     let intervalID = null;
     let eersteKeer = true;
 
@@ -91,7 +93,7 @@
       }
     }
 
-    shuffle(diaVolgorde);
+    shuffle(diaVolgorde); // Randomize de volgorde
 
     function startApp() {
       document.getElementById('welcome').style.display = 'none';
@@ -99,10 +101,9 @@
       document.documentElement.requestFullscreen();
 
       const pic = document.getElementById('pic');
-      pic.src = 'Dia1.png';
+      pic.src = 'Dia1.png'; // Intro dia
       pic.style.display = 'block';
 
-      // Klik activeert eerst countdown, daarna direct nieuwe dia's
       document.body.onclick = () => {
         if (eersteKeer) {
           eersteKeer = false;
@@ -115,13 +116,17 @@
 
     function nieuwMens() {
       if (diaVolgorde.length === 0) {
-        diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2);
-        shuffle(diaVolgorde);
+        document.getElementById("count").innerHTML = "Einde van de dia’s. Bedankt!";
+        setTimeout(() => {
+          document.getElementById("container").style.display = 'none';
+          document.getElementById('welcome').style.display = 'block'; 
+        }, 3000); // Wacht 3 seconden voor het tonen van het welkomsscherm
+        return;
       }
 
-      const volgende = diaVolgorde.shift();
+      const volgende = diaVolgorde.shift(); // Haal de volgende random dia op
       const pic = document.getElementById('pic');
-      pic.src = 'dia' + volgende + '.png';
+      pic.src = volgende;
     }
 
     function startCount(seconds) {
