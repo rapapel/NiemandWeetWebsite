@@ -1,16 +1,84 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Niemand Weet</title>
-    <link rel="stylesheet" href="style.css">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0">
+
+<style>
+#count {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 50vh;
+	font-style: bold;
+	color: white;
+}
+  
+#pic {
+	max-height:100vh;
+	width:auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+</style>
+
+<title>Niemand Weet</title>
 </head>
-<body>
-    <div class="container">
-        <img id="dia" src="img/welcome.png" alt="dia">
-        <div id="countdown" class="hidden">3</div>
-    </div>
-    <script src="script.js"></script>
+
+<body bgcolor="#0e3847">
+
+<div id="container">
+
+	<img id="pic" onclick="startCount(3)" src="dias/Dia1.PNG" style="">
+	<div id="count"></div>
+
+</div>
+
+
+<script type="text/javascript">
+//setTimeout(nieuwMens, 3000)
+	var aantal = 190-1;
+	
+	function nieuwMens(){
+		document.documentElement.requestFullscreen();
+		var ranID = Math.floor( (Math.random() * aantal) + 2);
+		document.getElementById('pic').src = ('img' + ranID + '.png');
+	}
+
+	
+function startCount(seconds){
+  
+(function(){
+	var counter = seconds;
+	span = document.getElementById("count");
+	span.innerHTML = counter;
+	document.getElementById("pic").style.opacity = 0.5;
+	
+	setInterval(function() {
+		counter--;
+		if (counter >= 0) {
+			span = document.getElementById("count");
+			span.innerHTML = counter;
+		}
+		// Display 'counter' wherever you want to display it.
+		if (counter === 0) {
+			nieuwMens();
+			span = document.getElementById("count");
+			span.innerHTML = '';
+			document.getElementById("pic").style.opacity = 1;
+			clearInterval(counter);
+		}
+    
+	}, 1000);
+    
+})();
+  
+}
+
+</script>
 </body>
 </html>
