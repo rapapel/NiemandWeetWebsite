@@ -9,6 +9,7 @@
       margin: 0;
       background-color: #0e3847;
       overflow: hidden;
+      touch-action: manipulation;
     }
 
     #count {
@@ -20,6 +21,8 @@
       font-weight: bold;
       color: white;
       z-index: 2;
+      user-select: none;
+      pointer-events: none;
     }
 
     #pic {
@@ -29,7 +32,6 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      touch-action: manipulation;
       display: none;
     }
 
@@ -72,7 +74,7 @@
 
   <!-- Hoofdcontainer -->
   <div id="container" style="display: none;">
-    <img id="pic" onclick="startCount(3)">
+    <img id="pic">
     <div id="count"></div>
   </div>
 
@@ -94,10 +96,13 @@
       document.getElementById('welcome').style.display = 'none';
       document.getElementById('container').style.display = 'block';
       document.documentElement.requestFullscreen();
-      // toon eerst Dia1.png
+
       const pic = document.getElementById('pic');
       pic.src = 'Dia1.png';
       pic.style.display = 'block';
+
+      // Activeer click-handler na start
+      document.body.onclick = () => startCount(3);
     }
 
     function nieuwMens() {
@@ -105,13 +110,14 @@
         diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2);
         shuffle(diaVolgorde);
       }
+
       let volgende = diaVolgorde.shift();
       const pic = document.getElementById('pic');
       pic.src = 'Dia' + volgende + '.png';
     }
 
     function startCount(seconds) {
-      if (intervalID !== null) return; // voorkom dubbele countdowns
+      if (intervalID !== null) return; // voorkom dubbele timers
 
       let counter = seconds;
       const span = document.getElementById("count");
@@ -129,7 +135,6 @@
           nieuwMens();
           span.innerHTML = '';
           pic.style.opacity = 1;
-          pic.style.display = 'block';
         }
       }, 1000);
     }
