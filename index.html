@@ -79,7 +79,7 @@
   </div>
 
   <script type="text/javascript">
-    const totaalAantal = 190;
+    const totaalAantal = 8;
     let diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2); // Dia2 t/m Dia190
     let intervalID = null;
     let eersteKeer = true;
@@ -121,7 +121,7 @@
 
       const volgende = diaVolgorde.shift();
       const pic = document.getElementById('pic');
-      pic.src = 'Dia' + volgende + '.png';
+      pic.src = 'dia' + volgende + '.png';
     }
 
     function startCount(seconds) {
