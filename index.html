@@ -8,6 +8,7 @@
     body {
       margin: 0;
       background-color: #0e3847;
+      overflow: hidden;
     }
 
     #count {
@@ -29,6 +30,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       touch-action: manipulation;
+      display: none;
     }
 
     #welcome {
@@ -70,7 +72,7 @@
 
   <!-- Hoofdcontainer -->
   <div id="container" style="display: none;">
-    <img id="pic" onclick="startCount(3)" src="Dia1.png">
+    <img id="pic" onclick="startCount(3)">
     <div id="count"></div>
   </div>
 
@@ -99,14 +101,17 @@
         shuffle(diaVolgorde);
       }
       let volgende = diaVolgorde.shift();
-      document.getElementById('pic').src = 'Dia' + volgende + '.png';
+      const pic = document.getElementById('pic');
+      pic.src = 'Dia' + volgende + '.png';
+      pic.style.display = 'block';
     }
 
     function startCount(seconds) {
       let counter = seconds;
       const span = document.getElementById("count");
       span.innerHTML = counter;
-      document.getElementById("pic").style.opacity = 0.5;
+      const pic = document.getElementById("pic");
+      pic.style.opacity = 0.5;
 
       const interval = setInterval(() => {
         counter--;
@@ -116,7 +121,7 @@
           clearInterval(interval);
           nieuwMens();
           span.innerHTML = '';
-          document.getElementById("pic").style.opacity = 1;
+          pic.style.opacity = 1;
         }
       }, 1000);
     }
