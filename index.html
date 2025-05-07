@@ -34,53 +34,21 @@
       transform: translate(-50%, -50%);
       display: block; /* Start Dia1 als eerste afbeelding */
     }
-
-    #welcome {
-      position: fixed;
-      z-index: 10;
-      background: #0e3847;
-      color: white;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-
-    #welcome h1 {
-      font-size: 3em;
-      margin-bottom: 1em;
-    }
-
-    #welcome button {
-      font-size: 2em;
-      padding: 0.5em 1em;
-      cursor: pointer;
-    }
   </style>
 
   <title>Niemand Weet</title>
 </head>
 
 <body>
-  <!-- Welkomscherm -->
-  <div id="welcome">
-    <h1>Welkom bij Niemand Weet</h1>
-    <button onclick="startApp()">Start</button>
-  </div>
-
   <!-- Hoofdscherm -->
-  <div id="container" style="display: none;">
-    <img id="pic" src="Dia1.png"> <!-- Dia1 direct tonen -->
+  <div id="container">
+    <img id="pic" src="dia1.png"> <!-- Dia1 direct tonen -->
     <div id="count"></div>
   </div>
 
   <script type="text/javascript">
     const diaBestanden = [
-      "Dia2.png", "Dia3.png", "Dia4.png", "Dia5.png", "Dia6.png", "Dia7.png", "Dia8.png"
+      "dia2.png", "dia3.png", "dia4.png", "dia5.png", "dia6.png", "dia7.png", "dia8.png"
     ]; // Handmatig de beschikbare dia's
     let diaVolgorde = [...diaBestanden]; // Kopie van de array om te randomizen
     let intervalID = null;
@@ -93,11 +61,8 @@
       }
     }
 
-    shuffle(diaVolgorde); // Randomize de volgorde
-
     function startApp() {
-      document.getElementById('welcome').style.display = 'none';
-      document.getElementById('container').style.display = 'block';
+      // Het welkomsscherm is nu verwijderd, omdat er geen startknop meer nodig is.
       document.documentElement.requestFullscreen();
 
       document.body.onclick = () => {
@@ -110,19 +75,18 @@
       };
     }
 
+    // Start de applicatie zodra de pagina geladen is
+    startApp();
+
     function nieuwMens() {
       if (diaVolgorde.length === 0) {
-        document.getElementById("count").innerHTML = "Einde van de dia’s. Bedankt!";
-        setTimeout(() => {
-          document.getElementById("container").style.display = 'none';
-          document.getElementById('welcome').style.display = 'block'; 
-        }, 3000); // Wacht 3 seconden voor het tonen van het welkomsscherm
-        return;
+        shuffle(diaBestanden); // Wanneer de dia's op zijn, randomize opnieuw
+        diaVolgorde = [...diaBestanden];
       }
 
       const volgende = diaVolgorde.shift(); // Haal de volgende random dia op
       const pic = document.getElementById('pic');
-      pic.src = volgende;
+      pic.src = volgende; // Zet de nieuwe afbeelding
     }
 
     function startCount(seconds) {
