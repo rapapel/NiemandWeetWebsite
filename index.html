@@ -66,22 +66,23 @@
 </head>
 
 <body>
-  <!-- Welkomstscherm -->
+  <!-- Welkomscherm -->
   <div id="welcome">
     <h1>Welkom bij Niemand Weet</h1>
     <button onclick="startApp()">Start</button>
   </div>
 
-  <!-- Hoofdcontainer -->
+  <!-- Hoofdscherm -->
   <div id="container" style="display: none;">
     <img id="pic">
     <div id="count"></div>
   </div>
 
   <script type="text/javascript">
-    let totaalAantal = 190;
-    let diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2);
+    const totaalAantal = 190;
+    let diaVolgorde = Array.from({ length: totaalAantal - 1 }, (_, i) => i + 2); // Dia2 t/m Dia190
     let intervalID = null;
+    let eersteKeer = true;
 
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -101,8 +102,15 @@
       pic.src = 'Dia1.png';
       pic.style.display = 'block';
 
-      // Activeer click-handler na start
-      document.body.onclick = () => startCount(3);
+      // Klik activeert eerst countdown, daarna direct nieuwe dia's
+      document.body.onclick = () => {
+        if (eersteKeer) {
+          eersteKeer = false;
+          startCount(3);
+        } else {
+          nieuwMens();
+        }
+      };
     }
 
     function nieuwMens() {
@@ -111,13 +119,13 @@
         shuffle(diaVolgorde);
       }
 
-      let volgende = diaVolgorde.shift();
+      const volgende = diaVolgorde.shift();
       const pic = document.getElementById('pic');
       pic.src = 'Dia' + volgende + '.png';
     }
 
     function startCount(seconds) {
-      if (intervalID !== null) return; // voorkom dubbele timers
+      if (intervalID !== null) return;
 
       let counter = seconds;
       const span = document.getElementById("count");
@@ -132,9 +140,9 @@
         } else {
           clearInterval(intervalID);
           intervalID = null;
-          nieuwMens();
           span.innerHTML = '';
           pic.style.opacity = 1;
+          nieuwMens();
         }
       }, 1000);
     }
