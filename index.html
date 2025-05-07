@@ -32,7 +32,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      display: none;
+      display: block; /* Start Dia1 als eerste afbeelding */
     }
 
     #welcome {
@@ -74,7 +74,7 @@
 
   <!-- Hoofdscherm -->
   <div id="container" style="display: none;">
-    <img id="pic">
+    <img id="pic" src="Dia1.png"> <!-- Dia1 direct tonen -->
     <div id="count"></div>
   </div>
 
@@ -100,16 +100,12 @@
       document.getElementById('container').style.display = 'block';
       document.documentElement.requestFullscreen();
 
-      const pic = document.getElementById('pic');
-      pic.src = 'Dia1.png'; // Intro dia
-      pic.style.display = 'block';
-
       document.body.onclick = () => {
         if (eersteKeer) {
           eersteKeer = false;
-          startCount(3);
+          startCount(3); // Start de countdown pas bij de eerste klik
         } else {
-          nieuwMens();
+          nieuwMens(); // Toon de volgende dia na de klik
         }
       };
     }
@@ -147,7 +143,7 @@
           intervalID = null;
           span.innerHTML = '';
           pic.style.opacity = 1;
-          nieuwMens();
+          nieuwMens(); // Toon de volgende dia na de countdown
         }
       }, 1000);
     }
